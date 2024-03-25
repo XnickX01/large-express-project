@@ -1,3 +1,5 @@
+require('dotenv').config(); 
+
 const express = require('express');
 const mongoose = require('mongoose');
 const routes = require('./routes');
@@ -12,14 +14,14 @@ const app = express();
 app.use(cors({ origin: '*'}));
 
 // MongoDB connection string
-const dbURI = 'mongodb+srv://uxproject:RagNarok1066@cluster0.jfh0p2w.mongodb.net/';
+const dbURI = process.env.MONGO_URI; // Use the connection string from .env file
 
 // Connect to MongoDB
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => console.log('Connected to MongoDB'))
   .catch((err) => console.log(err));
 
-  app.use(express.json());
+app.use(express.json());
 
 // Use routes
 app.use('/', routes);
